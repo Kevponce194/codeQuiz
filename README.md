@@ -21,7 +21,7 @@ Build a timed code quiz with multiple-choice questions, the questions based on j
 
 - [x] Provide links to Github repo, Github pages, and direct to High Score page
     * **Github repo:** https://github.com/Kevponce194/codeQuiz
-    * **GitHub Pages:** https://kevponce194.github.io/passGen/
+    * **GitHub Pages:** https://kevponce194.github.io/codeQuiz/
     * **High Score Page:** Also provide a link straight to viewing the high scores page.
 - [x] Continue git command line executions
 
