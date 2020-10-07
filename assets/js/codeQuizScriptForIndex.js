@@ -1,15 +1,30 @@
-var questions = [{
-    question: "Commonly used data types DO NOT include:",
-    choices: ["strings", "booleans", "alerts", "numbers"],
-    answer: "alerts",
+var questions = [
+  {
+    question: "What Ingredient isn't part of the German Beer Purity Law: Reinheitsgebot?",
+    choices: ["Barley", "Yeast", "Water", "Hops"],
+    answer: "Yeast",
   },
   {
-    question: "The condition in an if / else statement is enclosed within ____.",
-    choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
-    answer: "parentheses",
+    question: "What is the study or practice of fermentation in brewing?",
+    choices: ["Barleyology", "Zymurgy", "Axiology", "Embibeogy"],
+    answer: "Zymurgy",
+  },
+  {
+    question: "What style of Beer is Burton-on-Trent known for?",
+    choices: ["Pilsener", "Pale Ale", "Dunkel", "Stout"],
+    answer: "Pale Ale",
+  },
+  {
+    question: "What ingredient put into beer helps fight bacteria",
+    choices: ["Gypsum", "Campden Tablets", "Finings", "Hops"],
+    answer: "Hops",
   },
 ];
 
+var domScoreEl = document.querySelector("#domScore");
+var startQuizBtnEl = document.querySelector("#startQuizBtn");
+var introSectionEl = document.querySelector("#introSection") //maybe use this to hide
+var questionSectionEl = document.querySelector("#questionSelection")  //maybe use this to hide
 var questionNumEl = document.querySelector("#questionNum");
 var questionEl = document.querySelector("#question");
 var optionListEl = document.querySelector("#option-list");
@@ -18,7 +33,7 @@ var timerEl = document.querySelector("#timer");
 
 var questionIndex = 0; // for accessing the current object by index in array above
 var correctCount = 0; // for incrementing when an answer is correct
-var time = 10; // holds length of game
+var time = 25; // holds length of game
 var intervalId; // holds return of the setInterval ID
 //_____________________________________________________________________________
 function endQuiz() { //step 4- ends the quiz and calls show high score
@@ -28,9 +43,12 @@ function endQuiz() { //step 4- ends the quiz and calls show high score
   setTimeout(showHighScore, 2); // wait 2 seconds then call function to render high score page
 }
 //_____________________________________________________________________________
-function showHighScore() { // step 5 clear page and show high score
-  var name = prompt("Please enter your name"); //ask user to enter their name
-  //validation?
+function showHighScore() { 
+  var name = "";// step 5 clear page and show high score
+  do {name = prompt("Please enter your name"); //ask user to enter their name and validate
+  } while (!name);
+  
+// ----------------------- Break to new page ----------------------------------
 
   var high_scores = localStorage.getItem("scores"); //check to see if any scores in array...
 
@@ -61,6 +79,7 @@ function showHighScore() { // step 5 clear page and show high score
       "Name: " + high_scores[i].name + " Score: " + high_scores[i].score; //set the textContent for the li's
     contentUL.appendChild(contentLI); //  append the li's to the ul
   }
+// render to another page - create a new HTML page inside create a div with 
 
   document.body.appendChild(contentUL); //  append the ul to the body
 }
@@ -74,6 +93,9 @@ function updateTime() { // step 3a - called by step 2-renderQuestion to decremen
 }
 //_____________________________________________________________________________
 function renderQuestion() { // step 2 - renders question and starts timer
+  
+  // var body = document.body;
+  // body.innerHTML = "";
 
   if (time === 0) { // checks to see if still time, 
     updateTime(); // if no time calls updateTime   ---activate after styling
@@ -81,15 +103,14 @@ function renderQuestion() { // step 2 - renders question and starts timer
   }
 
   // if time is left calls updateTime at 1 second intervals
-  // intervalId = setInterval(updateTime, 1000); //add timer that will call updateTime every second
+  intervalId = setInterval(updateTime, 1000); //add timer that will call updateTime every second
   questionNumEl.textContent = "Question " + (questionIndex + 1) + ":"; //trying to get Question number
   questionEl.textContent = questions[questionIndex].question; //renders current question to DOM
 
   optionListEl.innerHTML = ""; // clears the optionListEl
   questionResultEl.innerHTML = ""; // clears the questionResultEl
 
-  var choices = questions[questionIndex].choices; // easier way to write the right side of the expression
-  // var choicesLength = choices.length;
+  var choices = questions[questionIndex].choices; // easier way to write var choicesLength = choices.length;
 
   for (var i = 0; i < choices.length; i++) {
     var questionListItem = document.createElement("li");
@@ -115,6 +136,7 @@ function checkAnswer(event) { // step 3c is called  by Event listener - checks i
       questionResultEl.setAttribute("class", "correct"); // colors the text Blue
       questionResultEl.textContent = "Correct"; // Notify user response is correct by updating DOM
       correctCount++; //Update the correctCount if necessary
+      domScoreEl.textContent = "Score: " + correctCount;
     } else {
       questionResultEl.setAttribute("class", "incorrect"); // colors the text Blue
       questionResultEl.textContent = "Incorrect"; // Notify user response is Incorrect by updating DOM
@@ -124,6 +146,26 @@ function checkAnswer(event) { // step 3c is called  by Event listener - checks i
   }
   setTimeout(nextQuestion, 2000); // wait 2 seconds and call next question
 }
+
+// introSectionEl.style.display === "block";
 //_____________________________________________________________________________
-renderQuestion(); // step 1 -calls function renderQuestion - this is the beginning of the execution cycle...
+// renderQuestion(); // step 0 -calls function hideIntro - this is the beginning of the execution cycle...
+startQuizBtnEl.addEventListener("click", hideIntro);
+//______________________________________________________________________
 optionListEl.addEventListener("click", checkAnswer); // ... step 3b then listens for a click, calls checkAnswer
+//______________________________________________________________________
+
+function hideIntro() { //hides the introduction and Start Quiz Button
+  introSectionEl.setAttribute("style", "display:none;");
+  renderQuestion();
+}
+
+
+
+// function hideIntro() {
+//   if (introSectionEl.style.display === "none") {
+//     introSectionEl.style.display = "block";
+//   } else {
+//     introSectionEl.style.display = "none";
+//   }
+// }
