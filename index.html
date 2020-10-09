@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="Description" content="Enter your description here" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
@@ -23,8 +23,8 @@
 
     <!-- header class contains link to high scores and Timer -->
     <header class="div row pt-3">
-      <div class="pb-1 text-center text-sm-left  col-sm-4 d-flex align-items-start flex-column  mt-auto highScoreLink">
-        View High Scores
+      <div class="pb-1 text-center text-sm-left  col-sm-4 d-flex align-items-start flex-column mt-auto highScoreLink">
+        <a href="./highScores.html">View High Scores</a>
       </div>
       <div id="domScore" class="text-center  col-sm-4 score">Score: 0
       </div>
@@ -56,7 +56,7 @@
     </section>
 
     <!--   question section -->
-    <section #id="questionSection" class="">
+    <section id="questionSection" class="">
       <div id="questionNum">
       </div>
       <div id="question"></div>
@@ -68,12 +68,7 @@
   </main>
   <!-- </div> -->
 
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="./assets/./js/codeQuizScriptForIndex.js"></script>
+  <script src="./assets/js/codeQuizScriptForIndex.js"></script>
 </body>
 
 </html>

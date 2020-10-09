@@ -1,12 +1,11 @@
-var questions = [
-  {
+var questions = [{
     question: "What Ingredient isn't part of the German Beer Purity Law: Reinheitsgebot?",
     choices: ["Barley", "Yeast", "Water", "Hops"],
     answer: "Yeast",
   },
   {
     question: "What is the study or practice of fermentation in brewing?",
-    choices: ["Barleyology", "Zymurgy", "Axiology", "Embibeogy"],
+    choices: ["Barleyology", "Zymurgy", "Axiology", "Embibeology"],
     answer: "Zymurgy",
   },
   {
@@ -23,8 +22,8 @@ var questions = [
 
 var domScoreEl = document.querySelector("#domScore");
 var startQuizBtnEl = document.querySelector("#startQuizBtn");
-var introSectionEl = document.querySelector("#introSection") //maybe use this to hide
-var questionSectionEl = document.querySelector("#questionSelection")  //maybe use this to hide
+var introSectionEl = document.querySelector("#introSection") //use this to hide
+var questionSectionEl = document.querySelector("#questionSelection") //maybe use this to hide? Not Used
 var questionNumEl = document.querySelector("#questionNum");
 var questionEl = document.querySelector("#question");
 var optionListEl = document.querySelector("#option-list");
@@ -35,6 +34,7 @@ var questionIndex = 0; // for accessing the current object by index in array abo
 var correctCount = 0; // for incrementing when an answer is correct
 var time = 25; // holds length of game
 var intervalId; // holds return of the setInterval ID
+ 
 //_____________________________________________________________________________
 function endQuiz() { //step 4- ends the quiz and calls show high score
   clearInterval(intervalId); // stops the timer
@@ -42,14 +42,21 @@ function endQuiz() { //step 4- ends the quiz and calls show high score
   body.innerHTML = "Game over, You scored " + correctCount; // clears the body and updates DOM to indicate game is over
   setTimeout(showHighScore, 2); // wait 2 seconds then call function to render high score page
 }
-//_____________________________________________________________________________
-function showHighScore() { 
-  var name = "";// step 5 clear page and show high score
-  do {name = prompt("Please enter your name"); //ask user to enter their name and validate
-  } while (!name);
-  
-// ----------------------- Break to new page ----------------------------------
 
+//_____________________________________________________________________________
+function showHighScore() {  // step 5 clear page and show high score
+
+  do{
+    var name = prompt("Please enter your name"); //ask user to enter their name and validate
+  } while (!name);
+  add_new_value_to_local_storage(name, correctCount)
+
+  // ----------------------- Break to new page ----------------------------------
+  location.href = 'highScores.html';
+}
+
+// ____________________________________________________________________________
+function add_new_value_to_local_storage(user_name, score){
   var high_scores = localStorage.getItem("scores"); //check to see if any scores in array...
 
   if (!high_scores) { // ...if no scores in array...
@@ -58,31 +65,37 @@ function showHighScore() {
     high_scores = JSON.parse(high_scores); // ... or parse the high scores that exist, 
     // which exist as strings and need to be converted back to object/array ... 
   }
-
   high_scores.push({
-    name: name,
-    score: correctCount
+    name: user_name,
+    score: score
   }); /// and push them into an array called high_scores
   console.log(high_scores); // debugging only
 
   localStorage.setItem("scores", JSON.stringify(high_scores)); //adds item to local storage 
 
-  high_scores.sort(function (a, b) { //  sort through array... 
+  appendArrayToDOM(high_scores)
+}
+
+// ____________________________________________________________________________
+function appendArrayToDOM(array_to_append) {
+
+   array_to_append.sort(function (a, b) { //  sort through array... 
     return b.score - a.score; // ... and sort in descending order
   });
 
   var contentUL = document.createElement("ul"); // create ul item to DOM
 
-  for (var i = 0; i < high_scores.length; i++) { // loop through scores array b... 
+  for (var i = 0; i < array_to_append.length; i++) { // loop through scores array b... 
     var contentLI = document.createElement("li"); // ... and create an li's for the above ul
     contentLI.textContent =
-      "Name: " + high_scores[i].name + " Score: " + high_scores[i].score; //set the textContent for the li's
+      "Name: " + array_to_append[i].name + " Score: " + array_to_append[i].score; //set the textContent for the li's
     contentUL.appendChild(contentLI); //  append the li's to the ul
   }
-// render to another page - create a new HTML page inside create a div with 
+  // render to another page - create a new HTML page inside create a div with 
 
   document.body.appendChild(contentUL); //  append the ul to the body
 }
+
 //_____________________________________________________________________________
 function updateTime() { // step 3a - called by step 2-renderQuestion to decrement time or endQuiz
   time--; // decrements the time
@@ -93,15 +106,10 @@ function updateTime() { // step 3a - called by step 2-renderQuestion to decremen
 }
 //_____________________________________________________________________________
 function renderQuestion() { // step 2 - renders question and starts timer
-  
-  // var body = document.body;
-  // body.innerHTML = "";
-
   if (time === 0) { // checks to see if still time, 
     updateTime(); // if no time calls updateTime   ---activate after styling
     return; //  why is this return needed ?
   }
-
   // if time is left calls updateTime at 1 second intervals
   intervalId = setInterval(updateTime, 1000); //add timer that will call updateTime every second
   questionNumEl.textContent = "Question " + (questionIndex + 1) + ":"; //trying to get Question number
@@ -144,28 +152,24 @@ function checkAnswer(event) { // step 3c is called  by Event listener - checks i
       timerEl.textContent = time; // updates DOM timer counter
     }
   }
-  setTimeout(nextQuestion, 2000); // wait 2 seconds and call next question
+  setTimeout(nextQuestion, 1000); // wait 2 seconds and call next question
 }
 
-// introSectionEl.style.display === "block";
-//_____________________________________________________________________________
+var high_score = document.getElementById("highScoresList");
+
+if(high_score){
+  appendArrayToDOM(JSON.parse(localStorage.getItem("scores")));
+}
+
+//____________________________________________________________________________
 // renderQuestion(); // step 0 -calls function hideIntro - this is the beginning of the execution cycle...
 startQuizBtnEl.addEventListener("click", hideIntro);
-//______________________________________________________________________
-optionListEl.addEventListener("click", checkAnswer); // ... step 3b then listens for a click, calls checkAnswer
-//______________________________________________________________________
+//____________________________________________________________________________
 
 function hideIntro() { //hides the introduction and Start Quiz Button
   introSectionEl.setAttribute("style", "display:none;");
   renderQuestion();
 }
 
-
-
-// function hideIntro() {
-//   if (introSectionEl.style.display === "none") {
-//     introSectionEl.style.display = "block";
-//   } else {
-//     introSectionEl.style.display = "none";
-//   }
-// }
+optionListEl.addEventListener("click", checkAnswer); // ... step 3b then listens for a click, calls checkAnswer
+//______________________________________________________________________
