@@ -96,6 +96,14 @@ hr {
     display: none;
 }
 
+h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    text-align: center;
+    color: sienna;  
+    white-space: pre; 
+}
+
 .introHeader,
 .highScoresHeader {
     font-size: 2rem;
@@ -115,3 +123,14 @@ span {
     font-weight: 800;
     color: goldenrod;
 }
+
+.scoreUL {
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    color: sienna
+}
+
+
+

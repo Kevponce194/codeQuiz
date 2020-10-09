@@ -18,6 +18,36 @@ var questions = [{
     choices: ["Gypsum", "Campden Tablets", "Finings", "Hops"],
     answer: "Hops",
   },
+  {
+    question: "Which of these is not a Hop?",
+    choices: ["Millenium", "Tomahawk", "Pilgrim", "Victory"],
+    answer: "Victory",
+  },
+  {
+    question: "How many Calories does a typical pint of Lager have?",
+    choices: ["185", "310", "215", "150"],
+    answer: "215",
+  },
+  {
+    question: "In what year was the Beer Can introduced?",
+    choices: ["1905", "1920", "1925", "1935"],
+    answer: "1935",
+  },
+  {
+    question: "Which of these beers does not contain Rice as an ingredient",
+    choices: ["Budweiser", "Corona", "Kirin", "San Miguel"],
+    answer: "San Miguel",
+  },
+  {
+    question: "Which is the largest Hop-producing country in the World?",
+    choices: ["China", "US", "Germany", "Czech Rep"],
+    answer: "Germany",
+  },
+  {
+    question: "What is the oldest beer brand still being brewed today",
+    choices: ["Augustiner", "Weihensephan", "Chimay", "Duvel"],
+    answer: "Weihensephan",
+  },
 ];
 
 var domScoreEl = document.querySelector("#domScore");
@@ -34,24 +64,48 @@ console.log("Hello", clearHiScoresEl) //debugging only. Points to adEventListene
 
 var questionIndex = 0; // for accessing the current object by index in array above
 var correctCount = 0; // for incrementing when an answer is correct
-var time = 25; // holds length of game
+var time = 30; // holds length of game
 var intervalId; // holds return of the setInterval ID
+var newline = "\r\n";
+var nbsp = "\u00a0";
+var dash = " -- "
 
 //_____________________________________________________________________________
 function endQuiz() { //step 4- ends the quiz and calls show high score
   clearInterval(intervalId); // stops the timer
   var body = document.body; // easier way of writing document.body
-  body.innerHTML = "Game over, You scored " + correctCount; // clears the body and updates DOM to indicate game is over
-  setTimeout(showHighScoreAndRedirect, 2); // wait 2 seconds then call function to render high score page
+
+  body.innerHTML = "" // clears the body and updates DOM to indicate game is over
+  var h2El = document.createElement("h2");
+  h2El.textContent = "Game over!" + newline + "You answered" + newline + correctCount + nbsp + "correctly.";
+  body.append(h2El);
+  setTimeout(showHighScoreAndRedirect, 2000); // wait 2 seconds then call function to render high score page
 }
 
 //_____________________________________________________________________________
 function showHighScoreAndRedirect() { // step 5 clear page and show high score
 
+//   var inpH3El = document.createElement("h3");
+//   inpH3El.textContent = "Enter Your Name..."
+//   var body = document.body;
+//   body.append(inpH3El);
+  
+//   do {
+//   var inputEl = document.createElement("input");
+//   inputEl.type = "text";
+//   inputEl.className = "css-class-name"; // set the CSS class
+//   inputEl.placeholder = "nameHere..."
+//   inputEl.value = ""
+//   body.appendChild(inputEl); // put it into the DOM
+// } while (!inputEl.value.value);
+//   var name = inputEl.value;
+  
   do {
     var name = prompt("Please enter your name"); //ask user to enter their name and validate
   } while (!name);
-  add_new_value_to_local_storage(name, correctCount)
+ 
+  add_new_value_to_local_storage(name, correctCount);
+  
 
   // ----------------------- Break to new page ----------------------------------
   location.href = 'highScores.html';
@@ -91,8 +145,10 @@ function appendArrayToDOM(array_to_append) {
   for (var i = 0; i < array_to_append.length; i++) { // loop through scores array b... 
     var contentLI = document.createElement("li"); // ... and create an li's for the above ul
     contentLI.textContent =
-      "Name: " + array_to_append[i].name + " Score: " + array_to_append[i].score; //set the textContent for the li's
+      "Name: " + array_to_append[i].name + dash + " Score: " + array_to_append[i].score; //set the textContent for the li's
     contentUL.appendChild(contentLI); //  append the li's to the ul
+    contentUL.setAttribute("class","scoreUL");
+    
   }
   // render to another page - create a new HTML page inside create a div with 
 
@@ -115,7 +171,7 @@ function renderQuestion() { // step 2 - renders question and starts timer
     return; //  why is this return needed ?
   }
   // if time is left calls updateTime at 1 second intervals
-  // intervalId = setInterval(updateTime, 1000); //add timer that will call updateTime every second
+  intervalId = setInterval(updateTime, 1000); //add timer that will call updateTime every second
   questionNumEl.textContent = "Question " + (questionIndex + 1) + ":"; //trying to get Question number
   questionEl.textContent = questions[questionIndex].question; //renders current question to DOM
 
@@ -145,7 +201,7 @@ function checkAnswer(event) { // step 3c is called  by Event listener - checks i
   if (event.target.matches("li")) { //checks to make sure you click an li
     var answer = event.target.textContent; //grabs the clicked on choice
     if (answer === questions[questionIndex].answer) { // checks real vs. clicked answer
-      
+
       questionResultEl.setAttribute("class", "correct"); // colors the text Blue
       questionResultEl.textContent = "Correct"; // Notify user response is correct by updating DOM
       scrollToTop();
@@ -156,7 +212,7 @@ function checkAnswer(event) { // step 3c is called  by Event listener - checks i
       questionResultEl.textContent = "Incorrect"; // Notify user response is Incorrect by updating DOM
       scrollToTop();
       time = time - 2; // subtract 2 seconds from time.
-      timerEl.textContent = time; // updates DOM timer counter
+      timerEl.textContent = "Time Left: " + time; // updates DOM timer counter
     }
   }
   setTimeout(nextQuestion, 1000); // wait 2 seconds and call next question
@@ -171,20 +227,20 @@ if (high_score) {
 
 function clearStorage() {
   console.log("Hello World");
- localStorage.clear();
- location.reload();
+  localStorage.clear();
+  location.reload();
 }
 
 if (clearHiScoresEl) {
-clearHiScoresEl.addEventListener("click", clearStorage);
+  clearHiScoresEl.addEventListener("click", clearStorage);
 }
 
 //__________________________________________________________________
 // renderQuestion(); // step 0 -calls function hideIntro - this is the beginning of the execution cycle...
 if (startQuizBtnEl) {
-startQuizBtnEl.addEventListener("click", hideIntro);
+  startQuizBtnEl.addEventListener("click", hideIntro);
 
-optionListEl.addEventListener("click", checkAnswer); // ... step 3b then listens for a click, calls checkAnswer
+  optionListEl.addEventListener("click", checkAnswer); // ... step 3b then listens for a click, calls checkAnswer
 }
 //___________________________________________________________________
 
@@ -194,13 +250,10 @@ function hideIntro() { //hides the introduction and Start Quiz Button
 }
 //____________________________________________________________________
 function scrollToTop() {
-  window.scrollTo(0,document.body.scrollHeight);
+  window.scrollTo(0, document.body.scrollHeight);
 };
 
 // ___________________________________________________________________
 // clearHiScores.addEventListener("click", function () {
 //   window.localStorage.clear();
 // });
-
-
-
