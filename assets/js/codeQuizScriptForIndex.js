@@ -145,13 +145,16 @@ function checkAnswer(event) { // step 3c is called  by Event listener - checks i
   if (event.target.matches("li")) { //checks to make sure you click an li
     var answer = event.target.textContent; //grabs the clicked on choice
     if (answer === questions[questionIndex].answer) { // checks real vs. clicked answer
+      
       questionResultEl.setAttribute("class", "correct"); // colors the text Blue
       questionResultEl.textContent = "Correct"; // Notify user response is correct by updating DOM
+      scrollToTop();
       correctCount++; //Update the correctCount if necessary
       domScoreEl.textContent = "Score: " + correctCount;
     } else {
       questionResultEl.setAttribute("class", "incorrect"); // colors the text Blue
       questionResultEl.textContent = "Incorrect"; // Notify user response is Incorrect by updating DOM
+      scrollToTop();
       time = time - 2; // subtract 2 seconds from time.
       timerEl.textContent = time; // updates DOM timer counter
     }
@@ -190,7 +193,9 @@ function hideIntro() { //hides the introduction and Start Quiz Button
   renderQuestion();
 }
 //____________________________________________________________________
-
+function scrollToTop() {
+  window.scrollTo(0,document.body.scrollHeight);
+};
 
 // ___________________________________________________________________
 // clearHiScores.addEventListener("click", function () {
