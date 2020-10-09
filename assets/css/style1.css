@@ -1,7 +1,3 @@
-/* Link to color scheme
-
-https://www.google.com/search?q=rust+color+schemes&rlz=1C5CHFA_enUS910US910&sxsrf=ALeKk00qrdBCfqmjYxIp7IoHzdldXTkhDA:1602002075229&tbm=isch&source=iu&ictx=1&fir=ovrL0YVXhzpqRM%252CMrq6wx7dcKfnAM%252C_&vet=1&usg=AI4_-kQprJuT1JMTfrnxJrJu3FYndv1N9A&sa=X&ved=2ahUKEwicgf7ksqDsAhXlmXIEHc8BCf0Q9QF6BAgSEFQ&biw=1449&bih=657#imgrc=ovrL0YVXhzpqRM */
-
 /*  The below outline selector is only for debuuging */
  /* * {
     outline: solid 1px red;
@@ -28,9 +24,15 @@ body {
 }
 
 /* link to the high Score */
+.clearScores,
 .playAgainLink,
 .highScoreLink {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+    color: rgb(98, 126, 112);
+    text-decoration: underline;
+}
+
+a {
     color: rgb(98, 126, 112);
 }
 
@@ -56,14 +58,19 @@ body {
     border: solid 1px sienna;
     border-radius: 4 px;
     margin: 10px 0;
-    display: block;
+    /* display: block; */
     width: 10rem;
+}
+
+li.btn {
+    display: block;
+    margin: 10px auto;
+
 }
 
 hr {
     border: solid 2px #fa3;
     margin: 0 0 1rem 0 ;
-
 }
 
 /* if answer is correct make type blue  */

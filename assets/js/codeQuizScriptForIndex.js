@@ -29,24 +29,26 @@ var questionEl = document.querySelector("#question");
 var optionListEl = document.querySelector("#option-list");
 var questionResultEl = document.querySelector("#question-result");
 var timerEl = document.querySelector("#timer");
+var clearHiScoresEl = document.querySelector("#clear-scores");
+console.log("Hello", clearHiScoresEl) //debugging only. Points to adEventListener Element
 
 var questionIndex = 0; // for accessing the current object by index in array above
 var correctCount = 0; // for incrementing when an answer is correct
 var time = 25; // holds length of game
 var intervalId; // holds return of the setInterval ID
- 
+
 //_____________________________________________________________________________
 function endQuiz() { //step 4- ends the quiz and calls show high score
   clearInterval(intervalId); // stops the timer
   var body = document.body; // easier way of writing document.body
   body.innerHTML = "Game over, You scored " + correctCount; // clears the body and updates DOM to indicate game is over
-  setTimeout(showHighScore, 2); // wait 2 seconds then call function to render high score page
+  setTimeout(showHighScoreAndRedirect, 2); // wait 2 seconds then call function to render high score page
 }
 
 //_____________________________________________________________________________
-function showHighScore() {  // step 5 clear page and show high score
+function showHighScoreAndRedirect() { // step 5 clear page and show high score
 
-  do{
+  do {
     var name = prompt("Please enter your name"); //ask user to enter their name and validate
   } while (!name);
   add_new_value_to_local_storage(name, correctCount)
@@ -56,7 +58,7 @@ function showHighScore() {  // step 5 clear page and show high score
 }
 
 // ____________________________________________________________________________
-function add_new_value_to_local_storage(user_name, score){
+function add_new_value_to_local_storage(user_name, score) {
   var high_scores = localStorage.getItem("scores"); //check to see if any scores in array...
 
   if (!high_scores) { // ...if no scores in array...
@@ -73,13 +75,14 @@ function add_new_value_to_local_storage(user_name, score){
 
   localStorage.setItem("scores", JSON.stringify(high_scores)); //adds item to local storage 
 
-  appendArrayToDOM(high_scores)
+  appendArrayToDOM(high_scores);
+
 }
 
 // ____________________________________________________________________________
 function appendArrayToDOM(array_to_append) {
 
-   array_to_append.sort(function (a, b) { //  sort through array... 
+  array_to_append.sort(function (a, b) { //  sort through array... 
     return b.score - a.score; // ... and sort in descending order
   });
 
@@ -104,6 +107,7 @@ function updateTime() { // step 3a - called by step 2-renderQuestion to decremen
     endQuiz(); // calls endQuiz()
   }
 }
+
 //_____________________________________________________________________________
 function renderQuestion() { // step 2 - renders question and starts timer
   if (time === 0) { // checks to see if still time, 
@@ -111,7 +115,7 @@ function renderQuestion() { // step 2 - renders question and starts timer
     return; //  why is this return needed ?
   }
   // if time is left calls updateTime at 1 second intervals
-  intervalId = setInterval(updateTime, 1000); //add timer that will call updateTime every second
+  // intervalId = setInterval(updateTime, 1000); //add timer that will call updateTime every second
   questionNumEl.textContent = "Question " + (questionIndex + 1) + ":"; //trying to get Question number
   questionEl.textContent = questions[questionIndex].question; //renders current question to DOM
 
@@ -157,19 +161,41 @@ function checkAnswer(event) { // step 3c is called  by Event listener - checks i
 
 var high_score = document.getElementById("highScoresList");
 
-if(high_score){
+if (high_score) {
   appendArrayToDOM(JSON.parse(localStorage.getItem("scores")));
+
 }
 
-//____________________________________________________________________________
+function clearStorage() {
+  console.log("Hello World");
+ localStorage.clear();
+ location.reload();
+}
+
+if (clearHiScoresEl) {
+clearHiScoresEl.addEventListener("click", clearStorage);
+}
+
+//__________________________________________________________________
 // renderQuestion(); // step 0 -calls function hideIntro - this is the beginning of the execution cycle...
+if (startQuizBtnEl) {
 startQuizBtnEl.addEventListener("click", hideIntro);
-//____________________________________________________________________________
+
+optionListEl.addEventListener("click", checkAnswer); // ... step 3b then listens for a click, calls checkAnswer
+}
+//___________________________________________________________________
 
 function hideIntro() { //hides the introduction and Start Quiz Button
   introSectionEl.setAttribute("style", "display:none;");
   renderQuestion();
 }
+//____________________________________________________________________
 
-optionListEl.addEventListener("click", checkAnswer); // ... step 3b then listens for a click, calls checkAnswer
-//______________________________________________________________________
+
+// ___________________________________________________________________
+// clearHiScores.addEventListener("click", function () {
+//   window.localStorage.clear();
+// });
+
+
+

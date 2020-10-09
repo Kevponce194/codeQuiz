@@ -23,18 +23,18 @@
 
     <!-- header class contains link to high scores and Timer -->
     <header class="div row pt-3">
-      <div class="pb-1 text-center text-sm-left  col-sm-4 d-flex align-items-start flex-column mt-auto highScoreLink">
+      <div class="pb-1 text-center text-sm-left  col-sm-4 d-flex flex-column mt-auto highScoreLink">
         <a href="./highScores.html">View High Scores</a>
       </div>
       <div id="domScore" class="text-center  col-sm-4 score">Score: 0
       </div>
-      <div id="timer" class="pb-1 text-center text-sm-right  col-sm-4 d-flex align-items-end flex-column mt-auto">Time
+      <div id="timer" class="pb-1 text-center text-sm-right  col-sm-4 d-flex flex-column mt-auto">Time
         Left: 0
       </div>
     </header>
-
+    
     <hr>
-
+    
     <!--   intro section -->
     <section id="introSection">
       <div class="row">
@@ -49,20 +49,17 @@
         </div>
       </div>
       <div class="row">
-        <div id="startQuizBtn" class="col-12 btn text-center">
-          Start Quiz
+        <div id="startQuizBtn" class="col-12 text-center">
+          <h2 class = "btn">Start Quiz</h2>
         </div>
       </div>
     </section>
 
     <!--   question section -->
-    <section id="questionSection" class="">
-      <div id="questionNum">
-      </div>
+    <section id="questionSection" class="text-center" class="">
+      <div id="questionNum"></div>
       <div id="question"></div>
-
       <ul id="option-list"></ul>
-
       <div id="question-result"></div>
     </section>
   </main>
