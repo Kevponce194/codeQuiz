@@ -29,5 +29,14 @@ Build a timed code quiz with multiple-choice questions, the questions based on j
 
 
 
-Inline-style: 
-![Intro](readMeAssets/intro.png) 
+Intro Page: 
+![Intro](readMeAssets/intro.png)
+
+Intro Page: 
+![Questions](readMeAssets/questions.png)
+
+Intro Page: 
+![Game Over](readMeAssets/gameOver.png)
+
+Intro Page: 
+![HiScores](readMeAssets/HiScores.png)
