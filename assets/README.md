@@ -27,8 +27,6 @@ Build a timed code quiz with multiple-choice questions, the questions based on j
 
 **App Screen Shots:**
 
-
-
 Intro Page: 
 ![Intro](readMeAssets/intro.png)
 
