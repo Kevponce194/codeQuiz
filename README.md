@@ -27,7 +27,14 @@ Build a timed code quiz with multiple-choice questions, the questions based on j
 
 **App Screen Shots:**
 
+Intro: 
+![Intro](readMeAssets/intro.png) 
 
+Questions: 
+![Questions](readMeAssets/questions.png)
 
-Inline-style: 
-![alt text](readMeAssets/intro.png) 
+Game Over: 
+![Game Over](readMeAssets/gameOver.png)
+
+High Scores: 
+![High Scores](readMeAssets/HiScores.png)
