@@ -30,4 +30,4 @@ Build a timed code quiz with multiple-choice questions, the questions based on j
 
 
 Inline-style: 
-![alt text](readMeAssets/intro.png) 
+![Intro](readMeAssets/intro.png) 

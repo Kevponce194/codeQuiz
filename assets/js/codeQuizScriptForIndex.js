@@ -84,21 +84,6 @@ function endQuiz() { //step 4- ends the quiz and calls show high score
 
 //_____________________________________________________________________________
 function showHighScoreAndRedirect() { // step 5 clear page and show high score
-
-//   var inpH3El = document.createElement("h3");
-//   inpH3El.textContent = "Enter Your Name..."
-//   var body = document.body;
-//   body.append(inpH3El);
-  
-//   do {
-//   var inputEl = document.createElement("input");
-//   inputEl.type = "text";
-//   inputEl.className = "css-class-name"; // set the CSS class
-//   inputEl.placeholder = "nameHere..."
-//   inputEl.value = ""
-//   body.appendChild(inputEl); // put it into the DOM
-// } while (!inputEl.value.value);
-//   var name = inputEl.value;
   
   do {
     var name = prompt("Please enter your name"); //ask user to enter their name and validate
@@ -130,7 +115,6 @@ function add_new_value_to_local_storage(user_name, score) {
   localStorage.setItem("scores", JSON.stringify(high_scores)); //adds item to local storage 
 
   appendArrayToDOM(high_scores);
-
 }
 
 // ____________________________________________________________________________
@@ -222,7 +206,6 @@ var high_score = document.getElementById("highScoresList");
 
 if (high_score) {
   appendArrayToDOM(JSON.parse(localStorage.getItem("scores")));
-
 }
 
 function clearStorage() {
@@ -235,7 +218,6 @@ if (clearHiScoresEl) {
   clearHiScoresEl.addEventListener("click", clearStorage);
 }
 
-//__________________________________________________________________
 // renderQuestion(); // step 0 -calls function hideIntro - this is the beginning of the execution cycle...
 if (startQuizBtnEl) {
   startQuizBtnEl.addEventListener("click", hideIntro);
